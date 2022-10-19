@@ -1,21 +1,50 @@
 import pygame
-import windowFramework, menuFramework, optionsFramework
-
+import windowFramework, menuFramework, optionsFramework, playFramework
 
 pygame.init()
 
-window_frame = windowFramework.window()
-menu_frame = menuFramework.menu(window_frame.window,window_frame.width, window_frame.height, window_frame.fullScreen)
-options_frame = optionsFramework.options(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen)
+
+class main:
+
+    def __init__(self):
+        pass
 
 
-while not window_frame.endFrame:
-    window_frame.fillFrame()
-    window_frame.manage_events()
-    #menu_frame.manage_events()
-    #menu_frame.draw(window_frame.fullScreen)
-    options_frame.manage_events()
-    options_frame.draw(window_frame.fullScreen)
-    window_frame.updateFrame()
+    def mainLoop(self):
+        loadGame = False
+        window_frame = windowFramework.window()
+        menu_frame = menuFramework.menu(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen)
+        options_frame = optionsFramework.options(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen)
+        play_frame = playFramework.game(window_frame.window, window_frame.xWindow, window_frame.yWindow, window_frame.fullScreen, loadGame)
 
+        while not window_frame.endFrame:
+            window_frame.fillFrame()
+            window_frame.manage_events(loadGame)
+
+            if options_frame.goLvl or play_frame.goLvl or not menu_frame.goLvl:  #options_frame.goLvl = False, menu_frame_goLvl = True
+                menu_frame.manage_events()
+                menu_frame.draw(window_frame.fullScreen)
+            
+            loadGame = False
+            if menu_frame.contYArrow == 0 and menu_frame.goLvl:
+                loadGame = True
+                options_frame.goLvl = False
+
+                play_frame.manage_events(loadGame)
+                play_frame.draw(loadGame, window_frame.fullScreen)
+
+            if menu_frame.contYArrow == 1 and menu_frame.goLvl:
+                play_frame.goLvl = False
+
+                options_frame.manage_events()
+                options_frame.draw(window_frame.fullScreen)
+
+
+            if menu_frame.contYArrow == 2 and menu_frame.goLvl:
+                window_frame.endFrame = True
+
+            window_frame.updateFrame()
+
+
+main().mainLoop()
 

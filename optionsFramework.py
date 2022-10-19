@@ -1,4 +1,3 @@
-
 import pygame
 from win32api import GetSystemMetrics
 
@@ -7,6 +6,7 @@ class options:
     def __init__(self, window, xWindow, yWindow, fullScreen):
         self.pathOptions = "imagenes/menu/options/"
         self.pathSound = self.pathOptions + "sound/"
+        self.pathButton = self.pathOptions + "buttons/"
 
         self.xWindow, self.yWindow = xWindow, yWindow
 
@@ -41,6 +41,28 @@ class options:
         self.volume80 = False
         self.volume100 = False
 
+        self.goLvl = False
+
+        self.backButtonX, self.backButtonY = 100, 100
+        
+        
+        self.backButton60 = pygame.image.load(self.pathButton + "back_button60.png").convert_alpha()
+        self.backButton70 = pygame.image.load(self.pathButton + "back_button70.png").convert_alpha()
+        self.backButton80 = pygame.image.load(self.pathButton + "back_button80.png").convert_alpha()
+        self.backButton90 = pygame.image.load(self.pathButton + "back_button90.png").convert_alpha()
+        self.backButton100 = pygame.image.load(self.pathButton + "back_button100.png").convert_alpha()
+
+        self.backButton60Width, self.backButton60Height = self.backButton60.get_width(), self.backButton60.get_height()
+        self.backButton80Width, self.backButton80Height = self.backButton80.get_width(), self.backButton80.get_height()
+        self.backButton100Width, self.backButton100Height = self.backButton100.get_width(), self.backButton100.get_height()
+
+        self.contChangeButtonDelay = 0
+        self.contChangeButton = 0
+
+        self.reverse = False
+
+        self.timeDelay = 10
+
     def draw(self, fullScreen):
         if fullScreen:
             self.changeValues = True
@@ -59,34 +81,115 @@ class options:
             self.sound80 = pygame.transform.scale(self.sound80, (self.soundBarWidth, self.soundBarHeight))
             self.sound100 = pygame.transform.scale(self.sound100, (self.soundBarWidth, self.soundBarHeight))
 
+
             if self.sonido == 0:
                 self.volume0 = True
                 self.window.blit(self.sound0, (maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3))
 
+                self.volume20 = False
+                self.volume40 = False
+                self.volume60 = False
+                self.volume80 = False
+                self.volume100 = False
+
             if self.sonido == 1:
                 self.volume20 = True
                 self.window.blit(self.sound20, (maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3))
+
+                self.volume0 = False
+                self.volume40 = False
+                self.volume60 = False
+                self.volume80 = False
+                self.volume100 = False
 
 
             if self.sonido == 2:
                 self.volume40 = True
                 self.window.blit(self.sound40, (maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3))
 
+                self.volume0 = False
+                self.volume20 = False
+                self.volume60 = False
+                self.volume80 = False
+                self.volume100 = False
+
             
             if self.sonido == 3:
                 self.volume60 = True
                 self.window.blit(self.sound60, (maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3))
+
+                self.volume0 = False
+                self.volume20 = False
+                self.volume40 = False
+                self.volume80 = False
+                self.volume100 = False
 
 
             if self.sonido == 4:
                 self.volume80 = True
                 self.window.blit(self.sound80, (maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3))
 
+                self.volume0 = False
+                self.volume20 = False
+                self.volume40 = False
+                self.volume60 = False
+                self.volume100 = False
 
             if self.sonido == 5:
                 self.volume100 = True
                 self.window.blit(self.sound100, (maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3))
 
+                self.volume0 = False
+                self.volume20 = False
+                self.volume40 = False
+                self.volume60 = False
+                self.volume80 = False
+
+            self.contChangeButtonDelay += 1 
+
+            if self.contChangeButtonDelay > self.timeDelay:
+
+                if self.reverse == False:
+                    self.contChangeButton += 1
+
+                if self.reverse:
+                    self.contChangeButton -= 1
+
+                self.contChangeButtonDelay = 0
+
+
+            if self.contChangeButton >= 7:
+                self.reverse = True
+
+            if self.contChangeButton <= 0:
+                self.reverse = False
+
+
+            if self.contChangeButton == 0:
+                self.window.blit(self.backButton100, (maxWidthWindow - 100, maxHeightWindow - 100))
+
+
+            elif self.contChangeButton == 1:
+                self.window.blit(self.backButton90, (maxWidthWindow - 95, maxHeightWindow - 95))
+
+            elif self.contChangeButton == 2:
+                self.window.blit(self.backButton80, (maxWidthWindow - 90, maxHeightWindow - 90))
+
+            elif self.contChangeButton == 3:
+                self.window.blit(self.backButton70, (maxWidthWindow - 85, maxHeightWindow - 85))
+                       
+            elif self.contChangeButton == 4:
+       
+                self.window.blit(self.backButton60, (maxWidthWindow - 80, maxHeightWindow - 80))
+
+            elif self.contChangeButton == 5:
+                self.window.blit(self.backButton70, (maxWidthWindow - 85, maxHeightWindow - 85))
+       
+            elif self.contChangeButton == 6:
+                self.window.blit(self.backButton80, (maxWidthWindow - 90, maxHeightWindow - 90))
+       
+            elif self.contChangeButton == 7:
+                self.window.blit(self.backButton90, (maxWidthWindow - 95, maxHeightWindow - 95))
         else:
             self.sound0 = pygame.transform.scale(self.sound0, (self.soundBarWidth//2, self.soundBarHeight//2))
             self.sound20 = pygame.transform.scale(self.sound20, (self.soundBarWidth//2, self.soundBarHeight//2))
@@ -99,6 +202,12 @@ class options:
                 self.volume0 = True
                 self.window.blit(self.sound0, (self.xWindow//2 - self.soundBarWidth//4, self.yWindow//3))
             
+                self.volume20 = False
+                self.volume40 = False
+                self.volume60 = False
+                self.volume80 = False
+                self.volume100 = False
+
             if self.sonido == 1:
                 self.volume20 = True
                 self.window.blit(self.sound20, (self.xWindow//2 - self.soundBarWidth//4, self.yWindow//3))
@@ -124,73 +233,121 @@ class options:
                 self.volume60 = True
                 self.window.blit(self.sound60, (self.xWindow//2 - self.soundBarWidth//4, self.yWindow//3))
 
+                self.volume0 = False
+                self.volume20 = False
+                self.volume40 = False
+                self.volume80 = False
+                self.volume100 = False
+
 
             if self.sonido == 4:
                 self.volume80 = True
                 self.window.blit(self.sound80, (self.xWindow//2 - self.soundBarWidth//4, self.yWindow//3))
+
+                self.volume0 = False
+                self.volume20 = False
+                self.volume40 = False
+                self.volume60 = False
+                self.volume100 = False
 
 
             if self.sonido == 5:
                 self.volume100 = True
                 self.window.blit(self.sound100, (self.xWindow//2 - self.soundBarWidth//4, self.yWindow//3))
 
+                self.volume0 = False
+                self.volume20 = False
+                self.volume40 = False
+                self.volume60 = False
+                self.volume80 = False
+
+
+
+            self.contChangeButtonDelay += 1 
+
+            if self.contChangeButtonDelay > self.timeDelay:
+
+                if self.reverse == False:
+                    self.contChangeButton += 1
+
+                if self.reverse:
+                    self.contChangeButton -= 1
+
+                self.contChangeButtonDelay = 0
+
+
+            if self.contChangeButton >= 7:
+                self.reverse = True
+
+            if self.contChangeButton <= 0:
+                self.reverse = False
+
+
+            if self.contChangeButton == 0:
+                self.window.blit(self.backButton100, (self.xWindow - 100, self.yWindow - 100))
+
+
+            elif self.contChangeButton == 1:
+                self.window.blit(self.backButton90, (self.xWindow - 95, self.yWindow - 95))
+
+            elif self.contChangeButton == 2:
+                self.window.blit(self.backButton80, (self.xWindow - 90, self.yWindow - 90))
+
+            elif self.contChangeButton == 3:
+                self.window.blit(self.backButton70, (self.xWindow - 85, self.yWindow - 85))
+                       
+            elif self.contChangeButton == 4:
+       
+                self.window.blit(self.backButton60, (self.xWindow - 80, self.yWindow - 80))
+
+            elif self.contChangeButton == 5:
+                self.window.blit(self.backButton70, (self.xWindow - 85, self.yWindow - 85))
+       
+            elif self.contChangeButton == 6:
+                self.window.blit(self.backButton80, (self.xWindow - 90, self.yWindow - 90))
+       
+            elif self.contChangeButton == 7:
+                self.window.blit(self.backButton90, (self.xWindow - 95, self.yWindow - 95))
+
+
+
+
         if self.volume0:
+            #print("0")
             self.soundTest.stop()
 
-            self.volume0 = False
-            self.volume20 = False
-            self.volume40 = False
-            self.volume60 = False
-            self.volume80 = False
-            self.volume100 = False
-
         if self.volume20:
-            self.volume0 = False
+            print("20")
 
+            self.soundTest.set_volume(0.2)
             self.soundTest.play()
-            self.soundTest.set_volume(20)
-
 
         if self.volume40: 
-            self.volume0 = False
-            self.volume20 = False
-            self.volume60 = False
-            self.volume80 = False
-            self.volume100 = False
+            print("40")
 
+            self.soundTest.set_volume(0.4)
             self.soundTest.play()
-            self.soundTest.set_volume(40)
 
         if self.volume60: 
-            self.volume20 = False
-            self.volume40 = False
-            self.volume80 = False
-            self.volume100 = False
+            print("60")
 
+            self.soundTest.set_volume(0.6)
             self.soundTest.play()
-            self.soundTest.set_volume(60)
 
         if self.volume80: 
-            self.volume0 = False
-            self.volume20 = False
-            self.volume40 = False
-            self.volume60 = False
-            self.volume100 = False
+            print("80")
 
+            self.soundTest.set_volume(0.8)
             self.soundTest.play()
-            self.soundTest.set_volume(80)
 
         if self.volume100: 
-            self.volume0 = False
-            self.volume20 = False
-            self.volume40 = False
-            self.volume60 = False
-            self.volume80 = False 
+            print("100")
 
+            self.soundTest.set_volume(1)
             self.soundTest.play()
-            self.soundTest.set_volume(100)
 
-        print(self.volume20, self.volume40)
+        #print(self.volume20, self.volume40)
+
 
     def manage_events(self):
         key = pygame.key.get_pressed()
@@ -203,12 +360,18 @@ class options:
                 self.contChange = 0
 
 
-        if key[pygame.K_LEFT]:
+        elif key[pygame.K_LEFT]:
             self.contChange += 1
 
             if self.contChange > 10:
                 self.sonido -= 1
                 self.contChange = 0
+
+        elif key[pygame.K_ESCAPE] or key[pygame.K_BACKSPACE]:
+            self.goLvl = True
+
+        else:
+            self.goLvl = False
 
         if self.sonido > 5:
             self.sonido = 5
