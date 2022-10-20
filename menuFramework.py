@@ -1,15 +1,13 @@
 import pygame
 from win32api import GetSystemMetrics
 
-
 class menu:
     def __init__(self, window, xWindow, yWindow, fullScreen):
-        pathImagen = "imagenes/"
-        pathMenu = "menu/"
-        pathMain = pathImagen + pathMenu + "main/"
+        pathMain = "images/menu/main/"
         pathPlay = pathMain + "play/"
         pathExit = pathMain + "exit/"
         pathOptions = pathMain + "options/"
+        pathArrow = pathMain + "arrow/"
 
         self.rectanguloPlayNotSelected = pygame.image.load(pathPlay + "playNotSelected.png").convert_alpha()
         self.heightRectangulo = self.rectanguloPlayNotSelected.get_height()
@@ -36,14 +34,11 @@ class menu:
         self.rectanguloOptionsOnSelected = pygame.image.load(pathOptions + "optionsOnSelected.png").convert_alpha()
         self.rectanguloOptionsNotSelected = pygame.image.load(pathOptions + "optionsNotSelected.png").convert_alpha()
 
-        #------------------------------
-        #-----------------------------
-
-        self.arrowList = [pygame.image.load(pathImagen + "arrow100.png").convert_alpha(), 
-                        pygame.image.load(pathImagen + "arrow75.png").convert_alpha(),
-                        pygame.image.load(pathImagen + "arrow50.png").convert_alpha(),
-                        pygame.image.load(pathImagen + "arrow25.png").convert_alpha(),
-                        pygame.image.load(pathImagen + "arrow0.png").convert_alpha()]
+        self.arrowList = [pygame.image.load(pathArrow + "arrow100.png").convert_alpha(), 
+                        pygame.image.load(pathArrow + "arrow75.png").convert_alpha(),
+                        pygame.image.load(pathArrow + "arrow50.png").convert_alpha(),
+                        pygame.image.load(pathArrow + "arrow25.png").convert_alpha(),
+                        pygame.image.load(pathArrow + "arrow0.png").convert_alpha()]
 
         self.arrowCont = 0
         self.contYArrow = 0
@@ -57,15 +52,12 @@ class menu:
         self.yListRectangulo = [(maxHeightWindow / 4) - self.heightRectangulo/2,  ((maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
                     ((maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
 
-        self.contChange = 0
 
         self.yArrowList = [(maxHeightWindow / 4) - self.heightRectangulo/2,  ((maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
                     ((maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
 
-
         self.contDelay = 10
-
-
+        self.contChange = 0
 
     def draw(self, fullscreen):
         if fullscreen:
@@ -75,7 +67,6 @@ class menu:
         else:
             self.changeValues = False 
             maxWidthWindow, maxHeightWindow = self.xWindow, self.yWindow
-        #------------------------------
 
         if self.changeValues:
             #print("full screen")
@@ -106,11 +97,9 @@ class menu:
             rectanguloExitOnSelected = pygame.transform.scale(self.rectanguloExitOnSelected, (self.xWindow, self.heightRectangulo))
             rectanguloExitNotSelected = pygame.transform.scale(self.rectanguloExitNotSelected, (self.xWindow, self.heightRectangulo))
 
-        #-----------------------------
         
         self.yListMenu = [(maxHeightWindow / 4) - self.heightRectangulo/2,  ((maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
                     ((maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
-        #-----------------------------
 
         xArrow, yArrow = 0, self.yListMenu[self.contYArrow] 
 
@@ -131,9 +120,9 @@ class menu:
 
         self.window.blit(self.arrow, (xArrow, yArrow))
 
-        self.contArrowChangeDelay += 5
 
-        if self.contArrowChangeDelay > 100:
+        self.contArrowChangeDelay += 5
+        if self.contArrowChangeDelay > 20:
             if not self.reverseArrowColor:
                 self.arrowCont += 1
                 self.contArrowChangeDelay = 0

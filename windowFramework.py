@@ -11,7 +11,6 @@ class window:
         self.fullScreen = False 
         self.endFrame = False
         
-        
         self.width, self.height = maxWidthWindow//2, maxHeightWindow//2
         self.window = pygame.display.set_mode((self.width, self.height))
 
@@ -50,5 +49,3 @@ class window:
 
             else:
                 self.window = pygame.display.set_mode((self.width, self.height))
-
-        #print(loadGame)
