@@ -59,6 +59,8 @@ class menu:
         self.contDelay = 10
         self.contChange = 0
 
+        self.arrowChangeVelocity = 5
+
     def draw(self, fullscreen):
         if fullscreen:
             self.changeValues = True
@@ -120,8 +122,7 @@ class menu:
 
         self.window.blit(self.arrow, (xArrow, yArrow))
 
-
-        self.contArrowChangeDelay += 5
+        self.contArrowChangeDelay += self.arrowChangeVelocity
         if self.contArrowChangeDelay > 20:
             if not self.reverseArrowColor:
                 self.arrowCont += 1
@@ -136,7 +137,6 @@ class menu:
             self.reverseArrowColor = True
 
         if self.arrowCont == 0:
-            self.arrowCont = 1
             self.reverseArrowColor = False
 
     def manage_events(self):
@@ -155,8 +155,6 @@ class menu:
             if self.contChange > self.contDelay:
                 self.contYArrow -= 1
                 self.contChange = 0
-
-
 
         elif key[pygame.K_RETURN]:
             self.goLvl = True

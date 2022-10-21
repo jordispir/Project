@@ -22,26 +22,30 @@ class window:
 
         self.loadGamePlayFramework = playFramework.game(self.window, self.xWindow, self.yWindow, self.fullScreen, None)
 
+        self.resolutionDelay = 0
+        self.resolutionVelocity = 20
+
     def updateFrame(self):
         pygame.display.flip()
 
 
     def fillFrame(self):
-        self.window.fill((0, 0, 0))
         self.clock.tick(60)
 
 
-    def manage_events(self, loadGame):
-        events = pygame.event.get()
-        
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if not loadGame:
-                    if event.key == pygame.K_m:
-                        self.fullScreen = True
+    def manage_events(self, loadGame, resolution):
+        if not loadGame:
+            if resolution == 1:
+                self.resolutionDelay += 1
+                if self.resolutionDelay > self.resolutionVelocity:
+                    self.resolutionDelay = 0
+                    self.fullScreen = True
 
-                    elif event.key == pygame.K_n:
-                        self.fullScreen = False
+            if resolution == 0:
+                self.resolutionDelay += 1
+                if self.resolutionDelay > self.resolutionVelocity:
+                    self.resolutionDelay = 0
+                    self.fullScreen = False
 
 
             if self.fullScreen:

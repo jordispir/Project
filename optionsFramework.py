@@ -7,11 +7,15 @@ class options:
         self.pathSound = self.pathOptions + "sound/"
         self.pathButton = self.pathOptions + "buttons/"
         self.pathResolution = self.pathOptions + "resolutions/"
+        self.pathArrow = self.pathOptions + "arrow/"
 
         maxWidthWindow, maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
         self.xWindow, self.yWindow = xWindow, yWindow
 
         self.fullScreen = fullScreen
+
+        self.backGround = pygame.image.load(self.pathOptions + "bg.png").convert_alpha()
+        self.bgX, self.bgY = 0, 0
 
         self.soundTest = pygame.mixer.Sound("images/menu/options/sound_effects/testSoundEffect.mp3")
 
@@ -29,10 +33,6 @@ class options:
         self.changeValues = False
 
         self.window = window
-
-        self.sonido = 0
-
-        self.contChange = 0
 
         self.volume0 = True 
         self.volume20 = False
@@ -53,13 +53,14 @@ class options:
         self.backButton80Width, self.backButton80Height = self.backButton80.get_width(), self.backButton80.get_height()
         self.backButton100Width, self.backButton100Height = self.backButton100.get_width(), self.backButton100.get_height()
 
-
+        self.sonido = 0
+        self.contChange = 0
         self.contChangeButtonDelay = 0
         self.contChangeButton = 0
-
-        self.reverse = False
-
         self.timeDelay = 10
+
+        self.reverseArrow = False
+        self.reverse = False
 
         self.resolutionFullScreen = pygame.image.load(self.pathResolution + "resolutionFullScreen.png").convert_alpha()
         self.resolutionFullScreenWidth, self.resolutionFullScreenHeight = self.resolutionFullScreen.get_width(), self.resolutionFullScreen.get_height()
@@ -69,7 +70,35 @@ class options:
 
         self.resolutionWindow = pygame.transform.scale(self.resolutionWindow, (self.resolutionFullScreenWidth//2, self.resolutionFullScreenHeight//2))
 
+        self.arrowList = [pygame.image.load(self.pathArrow + "arrow100.png").convert_alpha(), 
+                        pygame.image.load(self.pathArrow + "arrow75.png").convert_alpha(),
+                        pygame.image.load(self.pathArrow + "arrow50.png").convert_alpha(),
+                        pygame.image.load(self.pathArrow + "arrow25.png").convert_alpha(),
+                        pygame.image.load(self.pathArrow + "arrow0.png").convert_alpha()]
+
+        self.arrowWidth, self.arrowHeight = self.arrowList[0].get_width(), self.arrowList[0].get_height()
+
+        self.arrowWidthWindow, self.arrowHeightWindow = self.arrowWidth // 4, self.arrowHeight // 4
+
+        self.contArrow = 0
+        self.contArrowDelay = 0
+        self.arrowContChange = 0
+
+        self.arrowListYWindow = [self.soundBarWindowY, self.soundBarWindowY + self.soundBarHeight]
+        self.arrowListYFullScreen= [self.soundBarFullScreenY, self.soundBarFullScreenY + (self.soundBarHeight * 2)]
+
+        self.arrowChangeDelay = 0
+        self.arrowListPosition = 0
+
+        self.arrowChangeVelocity = 5
+
+        self.resolutionPosition = 0
+
+        self.resolutionChangeVelocity = 1
+        self.resolutionChangeDelay = 0
+
     def draw(self, fullScreen):
+
         if fullScreen:
             self.changeValues = True
             maxWidthWindow, maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
@@ -85,6 +114,11 @@ class options:
             self.sound60 = pygame.transform.scale(self.sound60, (self.soundBarWidth, self.soundBarHeight))
             self.sound80 = pygame.transform.scale(self.sound80, (self.soundBarWidth, self.soundBarHeight))
             self.sound100 = pygame.transform.scale(self.sound100, (self.soundBarWidth, self.soundBarHeight))
+
+            self.arrow = pygame.transform.scale(self.arrowList[self.contArrow], (self.arrowWidth // 2, self.arrowHeight // 2))
+            self.backGround = pygame.transform.scale(self.backGround, (maxWidthWindow, maxHeightWindow))
+
+            self.window.blit(self.backGround, (self.bgX, self.bgY))
 
             if self.sonido == 0:
                 self.volume0 = True
@@ -142,7 +176,6 @@ class options:
                 self.volume80 = False
 
             self.contChangeButtonDelay += 1 
-
             if self.contChangeButtonDelay > self.timeDelay:
 
                 if self.reverse == False:
@@ -184,8 +217,33 @@ class options:
                 self.window.blit(self.backButton90, (maxWidthWindow - 95, maxHeightWindow - 95))
 
 
+            self.contArrowDelay += self.arrowChangeVelocity
+            if self.contArrowDelay > 20: 
+                if not (self.reverseArrow):
+                    self.contArrow += 1
+                    self.contArrowDelay = 0
+
+                else:
+                    self.contArrow -= 1
+                    self.contArrowDelay = 0
+
+            if self.contArrow == 4:
+                self.reverseArrow = True
+
+            if self.contArrow == 0:
+                self.reverseArrow = False
+
+            if self.arrowListPosition == 0:
+                xArrow, yArrow = self.soundBarFullScreenX - self.arrowWidth, self.arrowListYFullScreen[self.arrowListPosition]
+                self.window.blit(self.arrow, (xArrow, yArrow))
+
+            elif self.arrowListPosition == 1:
+                xArrow, yArrow = self.soundBarFullScreenX - self.arrowWidth, self.arrowListYFullScreen[self.arrowListPosition]
+                self.window.blit(self.arrow, (xArrow, yArrow))
+
             self.window.blit(self.resolutionFullScreen, (maxWidthWindow//2 - self.soundBarWidth//2, (maxHeightWindow//3) + self.soundBarHeight * 2))
-            
+
+
         else:
             self.sound0 = pygame.transform.scale(self.sound0, (self.soundBarWidth//2, self.soundBarHeight//2))
             self.sound20 = pygame.transform.scale(self.sound20, (self.soundBarWidth//2, self.soundBarHeight//2))
@@ -194,7 +252,11 @@ class options:
             self.sound80 = pygame.transform.scale(self.sound80, (self.soundBarWidth//2, self.soundBarHeight//2))
             self.sound100 = pygame.transform.scale(self.sound100, (self.soundBarWidth//2, self.soundBarHeight//2))
 
+            self.arrow = pygame.transform.scale(self.arrowList[self.contArrow], (self.arrowWidthWindow, self.arrowHeightWindow))
 
+            self.backGround = pygame.transform.scale(self.backGround, (self.xWindow, self.yWindow))
+
+            self.window.blit(self.backGround, (self.bgX, self.bgY))
             if self.sonido == 0:
                 self.volume0 = True
                 self.window.blit(self.sound0,  (self.soundBarWindowX, self.soundBarWindowY))
@@ -294,6 +356,30 @@ class options:
 
             self.window.blit(self.resolutionWindow, (self.soundBarWindowX, self.soundBarWindowY  + self.soundBarHeight))
 
+            self.contArrowDelay += self.arrowChangeVelocity
+            if self.contArrowDelay > 20: 
+                if not (self.reverseArrow):
+                    self.contArrow += 1
+                    self.contArrowDelay = 0
+
+                else:
+                    self.contArrow -= 1
+                    self.contArrowDelay = 0
+
+            if self.contArrow == 4:
+                self.reverseArrow = True
+
+            if self.contArrow == 0:
+                self.reverseArrow = False
+
+            if self.arrowListPosition == 0:
+                xArrow, yArrow = self.soundBarWindowX - self.arrowWidthWindow - self.arrowWidthWindow // 2, self.arrowListYWindow[self.arrowListPosition]
+                self.window.blit(self.arrow, (xArrow, yArrow))
+
+            elif self.arrowListPosition == 1:
+                xArrow, yArrow = self.soundBarWindowX - self.arrowWidthWindow - self.arrowWidthWindow // 2, self.arrowListYWindow[self.arrowListPosition]
+                self.window.blit(self.arrow, (xArrow, yArrow))
+
         if self.volume0:
             self.soundTest.stop()
 
@@ -317,24 +403,77 @@ class options:
             self.soundTest.set_volume(1)
             self.soundTest.play()
 
-    def manage_events(self):
+    def manage_events(self, fullScreen):
         key = pygame.key.get_pressed()
 
-        if key[pygame.K_RIGHT]:
-            self.contChange += 1
+        if key[pygame.K_DOWN]:
+            self.arrowChangeDelay += 1
 
-            if self.contChange > 10:
-                self.sonido += 1
-                self.contChange = 0
+            if self.arrowChangeDelay > 20:
+                self.arrowListPosition += 1
+                self.arrowChangeDelay = 0
 
-        elif key[pygame.K_LEFT]:
-            self.contChange += 1
 
-            if self.contChange > 10:
-                self.sonido -= 1
-                self.contChange = 0
+        elif key[pygame.K_UP]:
+            self.arrowChangeDelay += 1
 
-        elif key[pygame.K_ESCAPE] or key[pygame.K_BACKSPACE]:
+            if self.arrowChangeDelay > 20:
+                self.arrowListPosition -= 1
+                self.arrowChangeDelay = 0
+
+
+        if self.arrowListPosition > 1:
+            self.arrowListPosition = 0
+
+        elif self.arrowListPosition < 0:
+            self.arrowListPosition = 1
+
+        if self.arrowListPosition == 0:
+            if key[pygame.K_RIGHT]:
+                self.contChange += 1
+
+                if self.contChange > 10:
+                    self.sonido += 1
+                    self.contChange = 0
+
+            elif key[pygame.K_LEFT]:
+                self.contChange += 1
+
+                if self.contChange > 10:
+                    self.sonido -= 1
+                    self.contChange = 0
+
+        elif self.arrowListPosition == 1:
+            if key[pygame.K_RIGHT]:
+                if self.resolutionPosition != 1:
+                    self.resolutionChangeDelay += 1
+
+                    if self.resolutionChangeDelay == self.resolutionChangeVelocity:
+                        self.resolutionPosition += 1
+                        self.resolutionChangeDelay = 0
+
+
+            elif key[pygame.K_LEFT]:
+                if self.resolutionPosition > 0:
+                    self.resolutionChangeDelay += 1
+
+                    if self.resolutionChangeDelay == self.resolutionChangeVelocity:
+                        self.resolutionPosition -= 1
+                        self.resolutionChangeDelay = 0
+
+
+
+            if self.resolutionPosition > 1:
+                self.resolutionPosition = 0
+
+            elif self.resolutionPosition < 0:
+                self.resolutionPosition = 1
+                
+
+             #print(self.resolutionChangeDelay, self.resolutionPosition) 
+
+
+        if key[pygame.K_ESCAPE] or key[pygame.K_BACKSPACE]:
             self.goLvl = True
 
         else:
@@ -345,3 +484,6 @@ class options:
 
         if self.sonido < 0:
             self.sonido = 0
+
+
+        #print(self.arrowListPosition)
