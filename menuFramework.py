@@ -2,15 +2,11 @@ import pygame
 
 
 class menu:
-    def __init__(self, window, xWindow, yWindow, fullScreen, system):
-        if system == "Windows":
-            from win32api import GetSystemMetrics
+    def __init__(self, window, xWindow, yWindow, fullScreen, maxWidthWindow, maxHeightWindow):
 
-            self.maxWidthWindow = GetSystemMetrics(0)
-            self.maxHeightWindowFullScreen = GetSystemMetrics(1)
+        self.maxWidthWindow = maxWidthWindow
+        self.maxHeightWindowFullScreen = maxHeightWindow
 
-        elif system == "MacOS":
-            pass
 
         pathMain = "images/menu/main/"
         pathPlay = pathMain + "play/"
@@ -26,7 +22,7 @@ class menu:
         self.goLvl = False
 
         if self.fullScreen:
-            self.maxHeightWindow = GetSystemMetrics(1)
+            self.maxHeightWindow = self.maxHeightWindowFullScreen
 
         else:
             self.maxHeightWindow = self.yWindow

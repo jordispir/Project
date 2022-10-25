@@ -2,13 +2,8 @@ import pygame
 
 
 class options:
-    def __init__(self, window, xWindow, yWindow, fullScreen, system):
+    def __init__(self, window, xWindow, yWindow, fullScreen, maxWidthWindow, maxHeightWindow):
 
-        if system == "Windows":
-            from win32api import GetSystemMetrics
-
-        elif system == "MacOS":
-            pass
 
         self.pathOptions = "images/menu/options/"
         self.pathSound = self.pathOptions + "sound/"
@@ -16,7 +11,7 @@ class options:
         self.pathResolution = self.pathOptions + "resolutions/"
         self.pathArrow = self.pathOptions + "arrow/"
 
-        self.maxWidthWindow, self.maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
+        self.maxWidthWindow, self.maxHeightWindow = maxWidthWindow, maxHeightWindow
         self.windowWidth, self.heighWindow = xWindow, yWindow
 
         self.fullScreen = fullScreen

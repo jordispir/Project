@@ -1,14 +1,8 @@
 import pygame 
 
 class game:
-    def __init__(self, window, xWindow, yWindow, fullScreen, loadGame, system):
+    def __init__(self, window, xWindow, yWindow, fullScreen, loadGame, maxWidth, maxHeight):
         
-        if system == "Windows":
-            from win32api import GetSystemMetrics
-            self.maxWidthWindow, self.maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1) # or try & except.
-
-        elif system == "MacOS":
-            pass
 
         self.goLvl = False
         
@@ -34,7 +28,7 @@ class game:
 
         if not loadGame:
             if fullScreen:
-                maxWidthWindow, maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
+                maxWidthWindow, maxHeightWindow = maxWidth, maxHeight
                 self.playerX, self.playerY = maxWidthWindow//2, maxHeightWindow//2
 
 

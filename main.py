@@ -1,27 +1,24 @@
-import pygame, platform
+import pygame, tkinter 
 import windowFramework, menuFramework, optionsFramework, playFramework
 
-system = platform.system()
-if system == "Windows":
-    from win32api import GetSystemMetrics
 
-elif system == "MacOS":
-    pass
 
 pygame.init()
 
 class main:
 
     def __init__(self):
-        pass
+        self.root = tkinter.Tk()
+        self.maxHeightWindow = self.root.winfo_screenheight()
+        self.maxWidthWindow = self.root.winfo_screenwidth()
 
 
     def mainLoop(self):
         loadGame = False
-        window_frame = windowFramework.window(system)
-        menu_frame = menuFramework.menu(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, system)
-        options_frame = optionsFramework.options(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, system)
-        play_frame = playFramework.game(window_frame.window, window_frame.xWindow, window_frame.yWindow, window_frame.fullScreen, loadGame, system)
+        window_frame = windowFramework.window(self.maxWidthWindow, self.maxHeightWindow)
+        menu_frame = menuFramework.menu(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, self.maxWidthWindow, self.maxHeightWindow)
+        options_frame = optionsFramework.options(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, self.maxWidthWindow, self.maxHeightWindow)
+        play_frame = playFramework.game(window_frame.window, window_frame.xWindow, window_frame.yWindow, window_frame.fullScreen, loadGame, self.maxWidthWindow, self.maxHeightWindow)
 
         while not window_frame.endFrame:
             window_frame.fillFrame()

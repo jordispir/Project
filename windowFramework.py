@@ -6,14 +6,9 @@ import pygame
 pygame.init()
 
 class window:
-    def __init__(self, system):
-        if system == "Windows":
-            from win32api import GetSystemMetrics
+    def __init__(self, maxWidthWindow, maxHeightWindow):
 
-        elif system == "MacOS":
-            pass
-
-        self.maxWidthWindow, self.maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
+        self.maxWidthWindow, self.maxHeightWindow = maxWidthWindow, maxHeightWindow
 
         self.width, self.height = self.maxWidthWindow//2, self.maxHeightWindow//2
         self.window = pygame.display.set_mode((self.width, self.height))
@@ -27,8 +22,6 @@ class window:
 
         self.fullScreen = False
         self.endFrame = False
-
-        self.loadGamePlayFramework = playFramework.game(self.window, self.xWindow, self.yWindow, self.fullScreen, system, None)
 
     def updateFrame(self):
         pygame.display.flip()
