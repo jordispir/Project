@@ -10,7 +10,7 @@ class options:
         self.pathArrow = self.pathOptions + "arrow/"
 
         maxWidthWindow, maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
-        self.xWindow, self.yWindow = xWindow, yWindow
+        self.windowWidth, self.heighWindow = xWindow, yWindow
 
         self.fullScreen = fullScreen
 
@@ -28,7 +28,7 @@ class options:
 
         self.soundBarWidth, self.soundBarHeight = self.sound0.get_width(), self.sound0.get_height()
         self.soundBarFullScreenX, self.soundBarFullScreenY = maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3
-        self.soundBarWindowX, self.soundBarWindowY = self.xWindow//2 - self.soundBarWidth//4, self.yWindow//3
+        self.soundBarWindowX, self.soundBarWindowY = self.windowWidth//2 - self.soundBarWidth//4, self.heighWindow//3
 
         self.changeValues = False
 
@@ -105,7 +105,7 @@ class options:
 
         else:
             self.changeValues = False
-            maxWidthWindow, maxHeightWindow = self.xWindow, self.yWindow
+            maxWidthWindow, maxHeightWindow = self.windowWidth, self.heighWindow
 
         if self.changeValues: 
             self.sound0 = pygame.transform.scale(self.sound0, (self.soundBarWidth, self.soundBarHeight))
@@ -254,9 +254,9 @@ class options:
 
             self.arrow = pygame.transform.scale(self.arrowList[self.contArrow], (self.arrowWidthWindow, self.arrowHeightWindow))
 
-            self.backGround = pygame.transform.scale(self.backGround, (self.xWindow, self.yWindow))
-
+            self.backGround = pygame.transform.scale(self.backGround, (self.windowWidth, self.heighWindow))
             self.window.blit(self.backGround, (self.bgX, self.bgY))
+
             if self.sonido == 0:
                 self.volume0 = True
                 self.window.blit(self.sound0,  (self.soundBarWindowX, self.soundBarWindowY))
@@ -331,28 +331,28 @@ class options:
                 self.reverse = False
 
             if self.contChangeButton == 0:
-                self.window.blit(self.backButton100, (self.xWindow - 100, self.yWindow - 100))
+                self.window.blit(self.backButton100, (self.windowWidth - 100, self.heighWindow - 100))
 
             elif self.contChangeButton == 1:
-                self.window.blit(self.backButton90, (self.xWindow - 95, self.yWindow - 95))
+                self.window.blit(self.backButton90, (self.windowWidth - 95, self.heighWindow - 95))
 
             elif self.contChangeButton == 2:
-                self.window.blit(self.backButton80, (self.xWindow - 90, self.yWindow - 90))
+                self.window.blit(self.backButton80, (self.windowWidth - 90, self.heighWindow - 90))
 
             elif self.contChangeButton == 3:
-                self.window.blit(self.backButton70, (self.xWindow - 85, self.yWindow - 85))
+                self.window.blit(self.backButton70, (self.windowWidth - 85, self.heighWindow - 85))
                        
             elif self.contChangeButton == 4:
-                self.window.blit(self.backButton60, (self.xWindow - 80, self.yWindow - 80))
+                self.window.blit(self.backButton60, (self.windowWidth - 80, self.heighWindow - 80))
 
             elif self.contChangeButton == 5:
-                self.window.blit(self.backButton70, (self.xWindow - 85, self.yWindow - 85))
+                self.window.blit(self.backButton70, (self.windowWidth - 85, self.heighWindow - 85))
        
             elif self.contChangeButton == 6:
-                self.window.blit(self.backButton80, (self.xWindow - 90, self.yWindow - 90))
+                self.window.blit(self.backButton80, (self.windowWidth - 90, self.heighWindow - 90))
        
             elif self.contChangeButton == 7:
-                self.window.blit(self.backButton90, (self.xWindow - 95, self.yWindow - 95))
+                self.window.blit(self.backButton90, (self.windowWidth - 95, self.heighWindow - 95))
 
             self.window.blit(self.resolutionWindow, (self.soundBarWindowX, self.soundBarWindowY  + self.soundBarHeight))
 

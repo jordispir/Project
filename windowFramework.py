@@ -30,6 +30,7 @@ class window:
 
 
     def fillFrame(self):
+        self.window.fill((0, 0, 0))
         self.clock.tick(60)
 
 

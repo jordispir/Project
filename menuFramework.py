@@ -167,4 +167,3 @@ class menu:
 
         if self.contYArrow < 0:
             self.contYArrow = 2
-
