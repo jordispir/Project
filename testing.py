@@ -2,7 +2,7 @@ from re import I
 import pygame
 from win32api import GetSystemMetrics
         
-class window:
+"""class window:
     def __init__(self):
         self.fullScreen = False 
         self.endFrame = False
@@ -81,4 +81,9 @@ while not frame.endFrame:
     frame.receive_events()
     frame.getEvent()
     frame.draw()
-    frame.updateFrame()
+    frame.updateFrame()"""
+
+width, height = 400, 400
+
+while True:
+    pygame.display.set_mode((width, height))

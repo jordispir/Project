@@ -2,13 +2,12 @@ import pygame
 
 class game:
     def __init__(self, window, xWindow, yWindow, fullScreen, loadGame, maxWidth, maxHeight):
-        
-
         self.goLvl = False
         
         self.window = window
         self.xWindow, self.yWindow = xWindow, yWindow
-        self.maxWidthWindow, self.maxHeightWindow = maxWidth, maxHeight
+        self.maxWidthWindow = maxWidth
+        self.maxHeightWindow = maxHeight
         self.fullScreen = fullScreen
 
         pathGame = "images/game/"
@@ -25,8 +24,6 @@ class game:
 
         self.testSize = 8
         self.range = 1
-
-            
 
         if not loadGame:
             if fullScreen:
