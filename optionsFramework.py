@@ -17,7 +17,11 @@ class options:
         self.backGround = pygame.image.load(self.pathOptions + "bg.png").convert_alpha()
         self.bgX, self.bgY = 0, 0
 
-        self.soundTest = pygame.mixer.Sound("images/menu/options/sound_effects/testSoundEffect.mp3")
+        try:
+            self.soundTest = pygame.mixer.Sound("images/menu/options/sound_effects/testSoundEffect.mp3")
+
+        except:
+            print("respositorio faltante sound test")
 
         self.sound0 = pygame.image.load(self.pathSound + "sound0.png").convert_alpha()
         self.sound20 = pygame.image.load(self.pathSound + "sound20.png").convert_alpha()
