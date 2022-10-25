@@ -1,4 +1,3 @@
-import playFramework
 import pygame
 
 
@@ -25,7 +24,6 @@ class window:
 
     def updateFrame(self):
         pygame.display.flip()
-
 
     def fillFrame(self):
         self.window.fill((0, 0, 0))

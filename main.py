@@ -1,8 +1,6 @@
 import pygame, tkinter 
 import windowFramework, menuFramework, optionsFramework, playFramework
 
-
-
 pygame.init()
 
 class main:

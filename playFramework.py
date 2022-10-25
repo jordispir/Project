@@ -8,6 +8,7 @@ class game:
         
         self.window = window
         self.xWindow, self.yWindow = xWindow, yWindow
+        self.maxWidthWindow, self.maxHeightWindow = maxWidth, maxHeight
         self.fullScreen = fullScreen
 
         pathGame = "images/game/"
@@ -24,16 +25,15 @@ class game:
 
         self.testSize = 8
         self.range = 1
+
             
 
         if not loadGame:
             if fullScreen:
-                maxWidthWindow, maxHeightWindow = maxWidth, maxHeight
-                self.playerX, self.playerY = maxWidthWindow//2, maxHeightWindow//2
+                self.playerX, self.playerY = self.maxWidthWindow//2, self.maxHeightWindow//2
 
 
             else:
-                maxWidthWindow, maxHeightWindow = self.xWindow, self.yWindow
                 self.playerX, self.playerY = self.xWindow//2, self.yWindow//2
 
     def manage_events(self, loadGame):
@@ -88,6 +88,8 @@ class game:
 
             else:
                 if not fullScreen:
+                    self.maxWidthWindow, self.maxHeightWindow = self.xWindow, self.yWindow
+
                     self.bg = pygame.transform.scale(self.bg, (self.maxWidthWindow, self.maxHeightWindow))
                     self.player = pygame.transform.scale(self.player, (self.xWindow//self.testSize, self.yWindow//self.testSize))
                     self.playerWidth, self.playerHeight = self.player.get_width(), self.player.get_height()
