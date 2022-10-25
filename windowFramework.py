@@ -33,6 +33,8 @@ class window:
         self.window.fill((0, 0, 0))
         self.clock.tick(60)
 
+        #
+
 
     def manage_events(self, loadGame, resolution):
         if not loadGame:
