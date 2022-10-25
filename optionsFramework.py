@@ -1,15 +1,22 @@
 import pygame
-from win32api import GetSystemMetrics
+
 
 class options:
-    def __init__(self, window, xWindow, yWindow, fullScreen):
+    def __init__(self, window, xWindow, yWindow, fullScreen, system):
+
+        if system == "Windows":
+            from win32api import GetSystemMetrics
+
+        elif system == "MacOS":
+            pass
+
         self.pathOptions = "images/menu/options/"
         self.pathSound = self.pathOptions + "sound/"
         self.pathButton = self.pathOptions + "buttons/"
         self.pathResolution = self.pathOptions + "resolutions/"
         self.pathArrow = self.pathOptions + "arrow/"
 
-        maxWidthWindow, maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
+        self.maxWidthWindow, self.maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
         self.windowWidth, self.heighWindow = xWindow, yWindow
 
         self.fullScreen = fullScreen
@@ -31,7 +38,7 @@ class options:
         self.sound100 = pygame.image.load(self.pathSound + "sound100.png").convert_alpha()
 
         self.soundBarWidth, self.soundBarHeight = self.sound0.get_width(), self.sound0.get_height()
-        self.soundBarFullScreenX, self.soundBarFullScreenY = maxWidthWindow//2 - self.soundBarWidth//2, maxHeightWindow//3
+        self.soundBarFullScreenX, self.soundBarFullScreenY = self.maxWidthWindow//2 - self.soundBarWidth//2, self.maxHeightWindow//3
         self.soundBarWindowX, self.soundBarWindowY = self.windowWidth//2 - self.soundBarWidth//4, self.heighWindow//3
 
         self.changeValues = False
@@ -105,7 +112,7 @@ class options:
 
         if fullScreen:
             self.changeValues = True
-            maxWidthWindow, maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
+            maxWidthWindow, maxHeightWindow = self.maxWidthWindow, self.maxHeightWindow
 
         else:
             self.changeValues = False
@@ -274,7 +281,6 @@ class options:
                 self.volume20 = True
                 self.window.blit(self.sound20,  (self.soundBarWindowX, self.soundBarWindowY))
                 self.volume0 = False
-                self.volume020 = False
                 self.volume60 = False
                 self.volume80 = False
                 self.volume100 = False

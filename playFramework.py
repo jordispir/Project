@@ -1,16 +1,21 @@
-import pygame
-from win32api import GetSystemMetrics
-
+import pygame 
 
 class game:
-    def __init__(self, window, xWindow, yWindow, fullScreen, loadGame):
-        self.goLvl = False
+    def __init__(self, window, xWindow, yWindow, fullScreen, loadGame, system):
+        
+        if system == "Windows":
+            from win32api import GetSystemMetrics
+            self.maxWidthWindow, self.maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1) # or try & except.
 
+        elif system == "MacOS":
+            pass
+
+        self.goLvl = False
+        
         self.window = window
         self.xWindow, self.yWindow = xWindow, yWindow
         self.fullScreen = fullScreen
 
-        pathMenu = "images/menu/"
         pathGame = "images/game/"
         pathPlay = pathGame + "images/"
 
@@ -26,7 +31,6 @@ class game:
         self.testSize = 8
         self.range = 1
             
-        self.maxWidthWindow, self.maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
 
         if not loadGame:
             if fullScreen:

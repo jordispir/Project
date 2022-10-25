@@ -1,16 +1,22 @@
 import pygame
-from win32api import GetSystemMetrics
+
 
 class menu:
-    def __init__(self, window, xWindow, yWindow, fullScreen):
+    def __init__(self, window, xWindow, yWindow, fullScreen, system):
+        if system == "Windows":
+            from win32api import GetSystemMetrics
+
+            self.maxWidthWindow = GetSystemMetrics(0)
+            self.maxHeightWindowFullScreen = GetSystemMetrics(1)
+
+        elif system == "MacOS":
+            pass
+
         pathMain = "images/menu/main/"
         pathPlay = pathMain + "play/"
         pathExit = pathMain + "exit/"
         pathOptions = pathMain + "options/"
         pathArrow = pathMain + "arrow/"
-
-        self.rectanguloPlayNotSelected = pygame.image.load(pathPlay + "playNotSelected.png").convert_alpha()
-        self.heightRectangulo = self.rectanguloPlayNotSelected.get_height()
 
         self.xWindow, self.yWindow = xWindow, yWindow
         self.changeValues = False
@@ -20,10 +26,10 @@ class menu:
         self.goLvl = False
 
         if self.fullScreen:
-            maxHeightWindow = GetSystemMetrics(1)
+            self.maxHeightWindow = GetSystemMetrics(1)
 
         else:
-            maxHeightWindow = self.yWindow
+            self.maxHeightWindow = self.yWindow
 
         self.rectanguloPlayOnSelected = pygame.image.load(pathPlay + "playOnSelected.png").convert_alpha()
         self.rectanguloPlayNotSelected = pygame.image.load(pathPlay + "playNotSelected.png").convert_alpha()
@@ -33,6 +39,8 @@ class menu:
 
         self.rectanguloOptionsOnSelected = pygame.image.load(pathOptions + "optionsOnSelected.png").convert_alpha()
         self.rectanguloOptionsNotSelected = pygame.image.load(pathOptions + "optionsNotSelected.png").convert_alpha()
+
+        self.heightRectangulo = self.rectanguloPlayOnSelected.get_height()
 
         self.arrowList = [pygame.image.load(pathArrow + "arrow100.png").convert_alpha(), 
                         pygame.image.load(pathArrow + "arrow75.png").convert_alpha(),
@@ -49,12 +57,12 @@ class menu:
         self.window = window
 
         self.xRectangulo = 0
-        self.yListRectangulo = [(maxHeightWindow / 4) - self.heightRectangulo/2,  ((maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
-                    ((maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
+        self.yListRectangulo = [(self.maxHeightWindow / 4) - self.heightRectangulo/2,  ((self.maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
+                    ((self.maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
 
 
-        self.yArrowList = [(maxHeightWindow / 4) - self.heightRectangulo/2,  ((maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
-                    ((maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
+        self.yArrowList = [(self.maxHeightWindow / 4) - self.heightRectangulo/2,  ((self.maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
+                    ((self.maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
 
         self.contDelay = 10
         self.contChange = 0
@@ -64,7 +72,8 @@ class menu:
     def draw(self, fullscreen):
         if fullscreen:
             self.changeValues = True
-            maxWidthWindow, maxHeightWindow = GetSystemMetrics(0), GetSystemMetrics(1)
+            self.maxHeightWindow = self.maxHeightWindowFullScreen
+            maxWidthWindow, maxHeightWindow = self.maxWidthWindow, self.maxHeightWindow
 
         else:
             self.changeValues = False 
@@ -74,7 +83,6 @@ class menu:
             #print("full screen")
             self.heightRectangulo = self.rectanguloPlayNotSelected.get_height() // 2
             self.arrow = pygame.transform.scale(self.arrowList[self.arrowCont], (self.arrowWidth, self.arrowHeight))
-            self.arrowWidth, self.arrowHeight = self.arrow.get_width(), self.arrow.get_height()
 
             rectanguloPlayOnSelected = pygame.transform.scale(self.rectanguloPlayOnSelected, (maxWidthWindow, self.heightRectangulo))
             rectanguloPlayNotSelected = pygame.transform.scale(self.rectanguloPlayNotSelected, (maxWidthWindow, self.heightRectangulo))
@@ -102,6 +110,8 @@ class menu:
         
         self.yListMenu = [(maxHeightWindow / 4) - self.heightRectangulo/2,  ((maxHeightWindow / 4) * 2) - self.heightRectangulo/2, 
                     ((maxHeightWindow / 4) * 3) - self.heightRectangulo/2]
+                    
+        print(maxWidthWindow, maxHeightWindow)
 
         xArrow, yArrow = 0, self.yListMenu[self.contYArrow] 
 

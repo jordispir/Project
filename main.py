@@ -1,8 +1,14 @@
-import pygame
+import pygame, platform
 import windowFramework, menuFramework, optionsFramework, playFramework
 
-pygame.init()
+system = platform.system()
+if system == "Windows":
+    from win32api import GetSystemMetrics
 
+elif system == "MacOS":
+    pass
+
+pygame.init()
 
 class main:
 
@@ -12,10 +18,10 @@ class main:
 
     def mainLoop(self):
         loadGame = False
-        window_frame = windowFramework.window()
-        menu_frame = menuFramework.menu(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen)
-        options_frame = optionsFramework.options(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen)
-        play_frame = playFramework.game(window_frame.window, window_frame.xWindow, window_frame.yWindow, window_frame.fullScreen, loadGame)
+        window_frame = windowFramework.window(system)
+        menu_frame = menuFramework.menu(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, system)
+        options_frame = optionsFramework.options(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, system)
+        play_frame = playFramework.game(window_frame.window, window_frame.xWindow, window_frame.yWindow, window_frame.fullScreen, loadGame, system)
 
         while not window_frame.endFrame:
             window_frame.fillFrame()
