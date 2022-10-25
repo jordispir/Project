@@ -385,27 +385,45 @@ class options:
                 self.window.blit(self.arrow, (xArrow, yArrow))
 
         if self.volume0:
-            self.soundTest.stop()
+            try:
+                self.soundTest.stop()
+            except:
+                pass
 
         if self.volume20:
-            self.soundTest.set_volume(0.2)
-            self.soundTest.play()
+            try:
+                self.soundTest.set_volume(0.2)
+                self.soundTest.play()
+            except:
+                pass
 
         if self.volume40:
-            self.soundTest.set_volume(0.4)
-            self.soundTest.play()
+            try:
+                self.soundTest.set_volume(0.4)
+                self.soundTest.play()
+            except:
+                pass
 
         if self.volume60: 
-            self.soundTest.set_volume(0.6)
-            self.soundTest.play()
+            try:
+                self.soundTest.set_volume(0.6)
+                self.soundTest.play()
+            except:
+                pass
 
         if self.volume80: 
-            self.soundTest.set_volume(0.8)
-            self.soundTest.play()
+            try:
+                self.soundTest.set_volume(0.8)
+                self.soundTest.play()
+            except:
+                pass
 
         if self.volume100: 
-            self.soundTest.set_volume(1)
-            self.soundTest.play()
+            try:
+                self.soundTest.set_volume(1)
+                self.soundTest.play()
+            except:
+                pass
 
     def manage_events(self, fullScreen):
         key = pygame.key.get_pressed()
