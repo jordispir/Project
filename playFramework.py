@@ -12,6 +12,7 @@ class game:
 
         pathGame = "images/game/"
         pathPlay = pathGame + "images/"
+        #
 
         self.bg = pygame.image.load(pathPlay+ "bg.png")
         self.xBg, self.yBg = 0, 0
