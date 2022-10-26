@@ -12,7 +12,6 @@ class game:
 
         pathGame = "images/game/"
         pathPlay = pathGame + "images/"
-        #
 
         self.bg = pygame.image.load(pathPlay+ "bg.png")
         self.xBg, self.yBg = 0, 0
@@ -86,7 +85,6 @@ class game:
 
             else:
                 if not fullScreen:
-                    self.maxWidthWindow, self.maxHeightWindow = self.xWindow, self.yWindow
 
                     self.bg = pygame.transform.scale(self.bg, (self.maxWidthWindow, self.maxHeightWindow))
                     self.player = pygame.transform.scale(self.player, (self.xWindow//self.testSize, self.yWindow//self.testSize))
