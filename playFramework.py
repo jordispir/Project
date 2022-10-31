@@ -69,6 +69,27 @@ class game:
                     elif key[pygame.K_DOWN]:
                         self.playerY += self.fullScreenVelocity
 
+                    elif key[pygame.K_RIGHT] and key[pygame.K_UP]:
+                        self.playerY += self.fullScreenVelocity
+                        self.playerX += self.fullScreenVelocity
+
+                    if key[pygame.K_RIGHT] and key[pygame.K_UP]:
+                        print("aaaaaaaaaaaaaa")
+                        self.playerY -= self.fullScreenVelocity//2
+                        self.playerX += self.fullScreenVelocity//2
+
+                    elif key[pygame.K_RIGHT] and key[pygame.K_DOWN]:
+                        self.playerY += self.fullScreenVelocity//2
+                        self.playerX += self.fullScreenVelocity//2
+
+                    elif key[pygame.K_LEFT] and key[pygame.K_UP]:
+                        self.playerY -= self.fullScreenVelocity//2
+                        self.playerX -= self.fullScreenVelocity//2
+
+                    elif key[pygame.K_LEFT] and key[pygame.K_DOWN]:
+                        self.playerY += self.fullScreenVelocity//2
+                        self.playerX -= self.fullScreenVelocity//2
+
                 else:
                     if self.playerX <= 0:
                         self.playerX = self.range
@@ -106,6 +127,23 @@ class game:
                         elif key[pygame.K_DOWN]:
                             self.playerY += self.windowVelocity
 
+                        if key[pygame.K_RIGHT] and key[pygame.K_UP]:
+                            print("aaaaaaaaaaaaaa")
+                            self.playerY -= self.windowVelocity//2
+                            self.playerX += self.windowVelocity//2
+
+                        elif key[pygame.K_RIGHT] and key[pygame.K_DOWN]:
+                            self.playerY += self.windowVelocity//2
+                            self.playerX += self.windowVelocity//2
+
+                        elif key[pygame.K_LEFT] and key[pygame.K_UP]:
+                            self.playerY -= self.windowVelocity//2
+                            self.playerX -= self.windowVelocity//2
+
+                        elif key[pygame.K_LEFT] and key[pygame.K_DOWN]:
+                            self.playerY += self.windowVelocity//2
+                            self.playerX -= self.windowVelocity//2
+ 
                     else:
                         if self.playerX <= 0:
                             self.playerX = self.range

@@ -508,5 +508,4 @@ class options:
         if self.sonido < 0:
             self.sonido = 0
 
-
         #print(self.arrowListPosition)
