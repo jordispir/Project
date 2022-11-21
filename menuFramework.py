@@ -126,6 +126,7 @@ class menu:
             self.window.blit(rectanguloPlayNotSelected, (self.xRectangulo, self.yListMenu[0]))
             self.window.blit(rectanguloOptionsNotSelected, (self.xRectangulo, self.yListMenu[1]))
 
+
         self.window.blit(self.arrow, (xArrow, yArrow))
 
         self.contArrowChangeDelay += self.arrowChangeVelocity

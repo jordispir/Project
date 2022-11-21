@@ -4,7 +4,6 @@ import windowFramework, menuFramework, optionsFramework, playFramework
 pygame.init()
 
 class main:
-
     def __init__(self):
         self.root = tkinter.Tk()
         self.maxHeightWindow = self.root.winfo_screenheight()
@@ -17,6 +16,8 @@ class main:
         menu_frame = menuFramework.menu(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, self.maxWidthWindow, self.maxHeightWindow)
         options_frame = optionsFramework.options(window_frame.window, window_frame.width, window_frame.height, window_frame.fullScreen, self.maxWidthWindow, self.maxHeightWindow)
         play_frame = playFramework.game(window_frame.window, window_frame.xWindow, window_frame.yWindow, window_frame.fullScreen, loadGame, self.maxWidthWindow, self.maxHeightWindow)
+        enemy_frame = playFramework.enemy(window_frame.window, window_frame.xWindow, window_frame.yWindow, window_frame.fullScreen, loadGame, self.maxWidthWindow, self.maxHeightWindow)
+        sprite_frame = playFramework.sprite_framework(window_frame.window)
 
         while not window_frame.endFrame:
             window_frame.fillFrame()
@@ -33,6 +34,10 @@ class main:
 
                 play_frame.manage_events(loadGame)
                 play_frame.draw(loadGame, window_frame.fullScreen)
+                enemy_frame.draw(loadGame, window_frame.fullScreen)
+
+                sprite_frame.draw()
+                sprite_frame.collide(play_frame.playerSprite, enemy_frame.enemySprite)
 
             if menu_frame.contYArrow == 1 and menu_frame.goLvl:
                 play_frame.goLvl = False

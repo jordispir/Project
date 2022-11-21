@@ -1,6 +1,7 @@
-from re import I
-import pygame
-from win32api import GetSystemMetrics
+from re import sub
+import subprocess
+
+subprocess.run(["pip3", "install", "pygame"])
         
 """class window:
     def __init__(self):
@@ -81,9 +82,9 @@ while not frame.endFrame:
     frame.receive_events()
     frame.getEvent()
     frame.draw()
-    frame.updateFrame()"""
+    frame.updateFrame()
 
 width, height = 400, 400
 
 while True:
-    pygame.display.set_mode((width, height))
+    pygame.display.set_mode((width, height))"""
